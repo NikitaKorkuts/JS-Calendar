@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<table border="1">
+		<caption class="table-caption">
+			<button class="table-caption_prevMonth">&#129040;</button>
+			<span class="table-caption_caption"></span>
+			<button class="table-caption_nextMonth">&#129042;</button>
+		</caption>
+		<tr>
+			<th>Понедельник</th>
+			<th>Вторник</th>
+			<th>Среда</th>
+			<th>Четрверг</th>
+			<th>Пятница</th>
+			<th class="holiday" >Суббота</th>
+			<th class="holiday" >Воскресение</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+		<tr class="extraRow">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="holiday"></td>
+			<td class="holiday"></td>
+		</tr>
+	</table>
+	<script>
+		const curDate = new Date();
+
+		let date = new Date(curDate)
+
+		setCaption(date)
+		setCalendarNumbers(date)
+
+		let prevBtn = document.getElementsByClassName('table-caption_prevMonth')[0],
+			nextBtn = document.getElementsByClassName('table-caption_nextMonth')[0];
+
+		prevBtn.addEventListener("click", function() {
+			deleteCalendarNumbers()
+
+			date = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate())
+
+			setCaption(date)
+			setCalendarNumbers(date)
+		})
+
+		nextBtn.addEventListener("click", function() {
+			deleteCalendarNumbers()
+
+			date = new Date(date.getFullYear(), date.getMonth() + 1, date.getDate())
+
+			setCaption(date)
+			setCalendarNumbers(date)
+		})
+
+		function setCaption(date) {
+			let dateYear = date.getFullYear(),
+			    dateMonth = date.getMonth(),
+			    dateNumber = date.getDate();
+
+			let tableCaption = document.getElementsByClassName('table-caption_caption')[0]
+			tableCaption.innerHTML = date.toLocaleString('default', { month: 'long' }) + " " + dateYear
+		}
+
+		function setCalendarNumbers(date) {		
+			let dateYear = date.getFullYear(),
+			    dateMonth = date.getMonth(),
+			    dateNumber = date.getDate();
+
+			let td = document.getElementsByTagName('td')
+
+			let number = 1
+			let lastNumber = new Date(dateYear, dateMonth + 1, 0).getDate()
+
+			let firstDayDate = new Date(dateYear, dateMonth, 1)
+			let firstDay = firstDayDate.getDay()	//0 - Sunday; 6 - Saturday;
+			firstDay = (firstDay == 0) ? firstDay + 6 : firstDay - 1  //0 - Monday; 6 - Sunday
+
+			let lastRow = document.getElementsByTagName('tr')[5],
+				extraRow = document.getElementsByClassName('extraRow')[0]
+
+			if(firstDay == 0 && lastNumber <= 28){
+				lastRow.style.display = 'none'
+			} else{
+				lastRow.style.display = 'table-row'
+			}
+
+			if(lastNumber >= (7 - firstDay + 1) + 28 ){
+				extraRow.style.display = 'table-row'
+			} else{
+				extraRow.style.display = 'none'
+			}
+
+			for (let i = firstDay; i < td.length; i++) {
+				td[i].innerHTML = number
+
+				if(new Date(dateYear, dateMonth, number).valueOf() == new Date(curDate.getFullYear(), curDate.getMonth(), curDate.getDate()).valueOf()){
+					td[i].classList.add('today')
+				}
+
+				if(number >= lastNumber){
+					break
+				} else{
+					number = number + 1
+				}				
+			}
+		}
+
+		function deleteCalendarNumbers(){
+			let td = document.getElementsByTagName('td')
+
+			for(let i = 0; i < td.length; i++){
+				if(td[i].classList.contains('today')){
+					td[i].classList.remove('today')
+				}
+
+				td[i].innerHTML = ''
+			}
+
+
+		}
+
+
+
+	</script>
+</body>
+</html>

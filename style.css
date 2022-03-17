@@ -1,0 +1,56 @@
+body{
+	font-family: sans-serif;
+}
+
+table{
+	margin: auto;
+	width: 90%;
+	border-collapse: collapse;
+}
+
+th{
+	font-weight: 200;
+	text-transform: uppercase;
+	width: 14%;
+	height: 30px;
+}
+
+td{
+	text-align: center;
+	font-weight: bold;
+	font-size: 60px;
+	height: 110px;
+
+}
+
+.table-caption{
+	text-align: center;
+	text-transform: capitalize;
+	font-size: 60px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.extraRow{
+	display: none;
+}
+
+.holiday{
+	color: red;
+}
+
+.today{
+	border: 5px solid red;
+}
+
+.table-caption button{
+	
+	margin: 0 50px;
+    background-color: #ececec;
+    color: black;
+    border: 1px solid black; /* Grey */
+    border-radius: 5px;
+    padding: 0 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
